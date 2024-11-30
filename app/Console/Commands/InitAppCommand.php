@@ -33,24 +33,31 @@ class InitAppCommand extends Command
             $this->info('Iniciando la configuración de la aplicación...');
             $this->newLine();
 
-            // Migrar la base de datos
+            // Migrate the database
             $this->simulateStep('Migrando base de datos', function () {
                 Artisan::call('migrate', ['--force' => true]);
             }, 'Base de datos migrada con éxito.');
 
             $this->newLine();
 
-            // Correr los seeders
+            // Run the Seeders
             $this->simulateStep('Poblando base de datos', function () {
                 Artisan::call('db:seed', ['--force' => true]);
             }, 'Base de datos poblada con éxito.');
 
             $this->newLine();
 
-            // Crear usuario administrador
+            // Create administrator user
             $this->simulateStep('Creando usuario administrador', function () {
                 $this->createAdminUser();
             }, 'Usuario administrador creado con éxito.');
+
+            $this->newLine();
+
+            // Execute tails processes.
+            $this->simulateStep('Corriendo procesos en cola', function () {
+                Artisan::call('queue:work', ['--tries=3' => true]);
+            }, 'Cola de procesos corriendo con éxito.');
 
             $this->newLine();
             $this->info('La aplicación ha sido configurada correctamente.');
@@ -62,13 +69,13 @@ class InitAppCommand extends Command
     }
 
     /**
-     * Simula un paso con una barra de progreso.
+     * It simulates a step with a progress bar.
      */
     private function simulateStep(string $message, callable $action, string $successMessage): void
     {
         $this->info($message);
         $this->output->progressStart(100);
-        usleep(500000); // Pausa para simular progreso
+        usleep(500000);
 
         $action();
 
@@ -78,22 +85,18 @@ class InitAppCommand extends Command
     }
 
     /**
-     * Crea el usuario administrador.
+     * The administrator user creates.
      */
     private function createAdminUser(): void
     {
         $this->info('Por favor, ingrese los datos del administrador:');
 
-        // Solicitar nombre
         $username = $this->ask('Nombre de usuario del administrador');
 
-        // Solicitar email
         $email = $this->askValidEmail();
 
-        // Solicitar contraseña
         $password = $this->askValidPassword();
 
-        // Crear el usuario
         User::create([
             'username' => $username,
             'email' => $email,
@@ -104,7 +107,7 @@ class InitAppCommand extends Command
     }
 
     /**
-     * Solicitar un correo electrónico válido.
+     * Request a valid email.
      */
     private function askValidEmail(): string
     {
@@ -116,7 +119,7 @@ class InitAppCommand extends Command
     }
 
     /**
-     * Solicitar una contraseña válida con regex.
+     * Request a valid password with regx.
      */
     private function askValidPassword(): string
     {
@@ -128,7 +131,7 @@ class InitAppCommand extends Command
     }
 
     /**
-     * Solicitar entrada con validación.
+     * Request entry with validation.
      */
     private function askWithValidation(string $question, callable $validation, string $errorMessage): string
     {
