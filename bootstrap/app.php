@@ -1,10 +1,12 @@
 <?php
 
+use App\Http\Middleware\IsAdminMiddelware;
 use Illuminate\Auth\AuthenticationException;
+use Illuminate\Http\Request;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Tymon\JWTAuth\Http\Middleware\Authenticate;
 
 return Application::configure(basePath: dirname(__DIR__))
@@ -17,14 +19,22 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->alias([
             'auth.jwt' => Authenticate::class,
+            'auth.admin' => IsAdminMiddelware::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         $exceptions->render(function (AuthenticationException $e, Request $request) {
+            Log::error('Unhandled Exception', [
+                'message' => $e->getMessage(),
+                'url' => $request->fullUrl(),
+                'ip' => $request->ip(),
+                'trace' => $e->getTraceAsString(),
+            ]);
+
             if ($request->is('api/*')) {
                 return response()->json([
-                    'message' => $e->getMessage(),
-                ], 401);
+                    'message' => 'An unexpected error occurred. Please try again later.',
+                ], 500);
             }
         });
     })->create();
