@@ -1,0 +1,431 @@
+<mjml>
+  <mj-head>
+    <mj-title></mj-title>
+    <mj-attributes>
+      <mj-all font-family="'Montserrat', 'Trebuchet MS', 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Tahoma, sans-serif"></mj-all>
+    </mj-attributes>
+    <mj-style>
+        .links {
+            color: #BBBBBB;
+            transition: color 0.3s ease-in-out;
+            text-decoration: none;
+        }
+
+        .links:hover {
+            color: #936FFE;
+        }
+    </mj-style>
+     <mj-style>
+        .links-block {
+            color: #936FFE;
+            transition: color 0.3s ease-in-out;
+            text-decoration: none;
+        }
+
+        .links-block:hover {
+            color: #936FFE;
+        }
+    </mj-style>
+    <mj-style>
+        .footer-text {
+            margin-top: -20px;
+            margin-bottom: -20px;
+        }
+    </mj-style>
+    <mj-style>
+        .links-column {
+            margin-top: 3px;
+        }
+    </mj-style>
+    <mj-style>
+        .special-text {
+            color: #fbd438;
+        }
+    </mj-style>
+   <mj-style>
+        .footer-section-main-title {
+            background: none;
+            color: rgb(251,236,83);
+            background-image: linear-gradient(180deg, rgb(251,236,83) 0%, rgb(241,177,79) 67%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.5;
+            font-size: 38px;
+            position: relative;
+            left: 2%;
+            top: -20px;
+        }
+    </mj-style>
+    <mj-style>
+        .footer-section-second-title {
+            color: white;
+            font-size: 25px;
+            position: relative;
+            top: -50px;
+        }
+    </mj-style>
+    <mj-style>
+        .footer-section-button {
+            position: relative;
+            top: -50px;
+        }
+    </mj-style>
+    <mj-style>
+        .social-element {
+            background-color: transparent;
+            border: solid transparent 1px;
+            transition: border 0.3s ease-in-out;
+            transition: background 0.3s ease-in-out;
+        }
+
+        .social-element:hover {
+            border: solid #936FFE 1px;
+            background-color: #936FFE;
+        }
+    </mj-style>
+    <mj-style>
+  /* Styles to small screens (max-width: 768px) */
+  @media (max-width: 768px) {
+    .links {
+      font-size: 16px;
+    }
+    .footer-text {
+      margin-top: -15px;
+      margin-bottom: -15px;
+    }
+    .links-column {
+      margin-top: 2px;
+    }
+    .special-text {
+      color: #fbd438;
+    }
+    .footer-section-main-title {
+      font-size: 2.9em;
+      left: 0.3em;
+      top: -0.55em
+    }
+    .footer-section-second-title {
+      font-size: 2em;
+      left: 0.2em;
+    }
+    .footer-section-button {
+      top: -3rem;
+    }
+  }
+</mj-style>
+
+<mj-style>
+  /* Styles to medium screens (min-width: 769px y max-width: 992px) */
+  @media (min-width: 769px) and (max-width: 992px) {
+    .links {
+      font-size: 18px;
+    }
+    .footer-text {
+      margin-top: -18px;
+      margin-bottom: -18px;
+    }
+    .links-column {
+      margin-top: 3px;
+    }
+    .special-text {
+      color: #fbd438;
+    }
+    .footer-section-main-title {
+      font-size: 2.9em;
+      left: 0.3em;
+      top: -0.5em
+    }
+    .footer-section-second-title {
+      font-size: 1.9em;
+    }
+    .footer-section-button {
+      top: -3rem;
+    }
+  }
+</mj-style>
+
+<mj-style>
+  /* Styles to big screens (min-width: 993px) */
+  @media (min-width: 993px) {
+    .links {
+      font-size: 16px;
+    }
+    .footer-text {
+      margin-top: -20px;
+      margin-bottom: -20px;
+    }
+    .links-column {
+      margin-top: 4px;
+    }
+    .special-text {
+      color: #fbd438;
+    }
+    .footer-section-main-title {
+      font-size: 3em;
+      left: 0.5em;
+      top: -0.6em
+    }
+    .footer-section-second-title {
+      font-size: 2em;
+      left: 0.5em;
+    }
+    .footer-section-button {
+        top: -3.3rem;
+    }
+  }
+</mj-style>
+  </mj-head>
+  <mj-body background-color="#2e2d2c" text-size-adjust="none">
+    <!-- Row 1 (Header) -->
+    <mj-section background-color="#1f1f1f" padding="15px 0">
+      <mj-column width="100%">
+        <mj-image align="left" src="http://localhost:80/images/mail/tally-logo.png" alt="MiCasino.com" title="MiCasino.com" width="100px" />
+      </mj-column>
+    </mj-section>
+    <!-- End Row 1 (Header) -->
+
+    <!-- Row 2 -->
+    <mj-section background-color="#1f1f1f"
+        background-url="http://localhost:8082/images/mail/main-header.png"
+        background-size="cover"
+        background-repeat="no-repeat"
+        border-radius="0px 0px 25px 25px"
+    >
+        <mj-column width="100%">
+            <mj-text css-class="hero-title"
+                align="center"
+                font-size="32px"
+                color="#ECECEC"
+                font-weight="900"
+                font-family="Montserrat, verdana, sans-serif">
+                ¡Bienvenido a Tally <span class="links-block"> {{ $name }} </span>!🎉
+                <!-- {{ $welcomeMessage }} -->
+            </mj-text>
+            <mj-button css-class="button"
+                align="center"
+                font-weight="900"
+                font-size="16px"
+                background-color="#936FFE"
+                color="#FFF"
+                href="https://www.tallylegal.io/"
+                font-family="Montserrat, verdana, sans-serif"
+                border-radius="8px"
+            >
+                Empieza con tu proceso
+            </mj-button>
+        </mj-column>
+        <mj-column width="40%">
+            <mj-image src="http://localhost:8082/images/mail/gift.png" alt="" />
+        </mj-column>
+    </mj-section>
+    <!-- End Row 2 -->
+
+    <!-- Content main start. -->
+    <!-- Row 3 -->
+    <mj-section background-color="#2E2D2C"
+        background-size="cover"
+        background-repeat="no-repeat"
+    >
+        <mj-column width="600px">
+            <mj-text css-class="main-content"
+                align="center"
+                font-size="20px"
+                line-height="30px"
+                color="white"
+                font-weight="500"
+                font-family="Noto Sans">
+                Estamos emocionados de tenerte con nosotros. Somos tu aliado
+                inseparable al momento de registrar tu empresa.
+            </mj-text>
+        </mj-column>
+    </mj-section>
+    <!-- End Row 3 -->
+
+    <!-- Row 4 -->
+    <mj-section css-class="section-fauna"
+        background-color="#EDE8FF"
+        border-radius="16px"
+    >
+        <mj-column width="600px">
+            <mj-text align="center"
+                font-size="30px"
+                color="#2E2D2C"
+                font-weight="900"
+                font-family="Noto Sans">
+                Cómo empezar:
+            </mj-text>
+        </mj-column>
+        <mj-column width="30%">
+            <mj-text css-class="text-block"
+                align="left"
+                padding-top="40px"
+                font-size="40px"
+                color="#936FFE"
+                font-family="Noto Sans"
+            >
+                1.
+            </mj-text>
+        </mj-column>
+        <mj-column width="70%">
+            <mj-text css-class="text-block"
+                align="left"
+                padding-top="40px"
+                font-size="20px"
+                color="#212121"
+                font-family="Noto Sans"
+            >
+                Haz tu registro en nuestra plataforma.
+            </mj-text>
+        </mj-column>
+        <mj-column width="30%">
+            <mj-text css-class="text-block"
+                align="left"
+                padding-top="40px"
+                font-size="40px"
+                color="#936FFE"
+                font-family="Noto Sans"
+            >
+                2.
+            </mj-text>
+        </mj-column>
+        <mj-column width="70%">
+            <mj-text css-class="text-block"
+                align="left"
+                padding-top="40px"
+                font-size="20px"
+                color="#212121"
+                font-family="Noto Sans"
+                >
+                Explora nuestros nuestro servicios y ponte en contacto con nosotros para saber mucho más sobre como hacer tu registro legal.
+            </mj-text>
+        </mj-column>
+        <mj-column width="600px">
+            <mj-text css-class="footer-text-block"
+                align="left"
+                padding-top="40px"
+                font-size="16px"
+                color="#212121"
+                font-family="Noto Sans"
+                >
+                Si tienes alguna pregunta, nuestro equipo de soporte está disponible 24/7.
+            </mj-text>
+        </mj-column>
+        <mj-column width="600px">
+            <mj-button css-class="button-block"
+                align="center"
+                font-weight="900"
+                font-size="20px"
+                background-color="#936FFE"
+                border-radius="8px"
+                color="#FFF"
+                inner-padding="15px 40px"
+                href="https://www.tallylegal.io/"
+                font-family="Montserrat, verdana, sans-serif">
+                Obtener ayuda
+            </mj-button>
+        </mj-column>
+    </mj-section>
+    <!-- End Row 4 -->
+
+    <!-- Row 5 -->
+    <mj-section background-color="#2E2D2C"
+        background-size="cover"
+        background-repeat="no-repeat"
+    >
+        <mj-column width="50%">
+        <mj-image src="http://localhost:80/images/mail/tally-icon.png" alt="tally-icon" />
+        </mj-column>
+        <mj-column width="50%">
+            <mj-text css-class="main-content"
+                padding-top="40px"
+                align="center"
+                font-size="25px"
+                color="white"
+                font-weight="500"
+                line-height="30px"
+                font-family="Noto Sans">
+                Te deseamos mucha suerte y nos alegra ser tu primera opcion, recuerda todo es posible con <a class="links-block" href="https://www.tallylegal.io/"><span>Tally</span><a/>.
+            </mj-text>
+        </mj-column>
+    </mj-section>
+    <!-- End Row 5 -->
+    <!-- Content main end. -->
+
+    <!-- Footer -->
+    <!-- Social section -->
+    <mj-section background-color="#1f1f1f"
+        border-radius="25px 25px 0px 0px"
+    >
+        <mj-column width="600px">
+            <mj-social inner-padding="0px 18px">
+                <mj-social-element css-class="social-element"
+                    name="Facebook"
+                    href="https://www.facebook.com/tally.legal"
+                    src="http://localhost:80/images/mail/facebook-icon.png"
+                    icon-size="28px">
+                </mj-social-element>
+                <mj-social-element css-class="social-element"
+                    name="Twitter"
+                    href="https://twitter.com/tally_legal"
+                    src="http://localhost:80/images/mail/twitter-icon.png"
+                    icon-size="28px">
+                </mj-social-element>
+                <mj-social-element css-class="social-element"
+                    name="Linkedin"
+                    href="https://www.linkedin.com/company/tallylegal"
+                    src="http://localhost:80/images/mail/linkedin-icon.png"
+                    icon-size="28px">
+                </mj-social-element>
+                <mj-social-element css-class="social-element"
+                    name="Instagram"
+                    href="https://www.instagram.com/accounts/login/?next=/tally.legal/"
+                    src="http://localhost:80/images/mail/instagram-icon.png"
+                    icon-size="28px">
+                </mj-social-element>
+            </mj-social>
+        </mj-column>
+        <mj-column width="50%">
+        <mj-button css-class="button"
+                align="right"
+                font-weight="500"
+                font-size="16px"
+                background-color="#1f1f1f"
+                color="#A8A8A8"
+                href="http://localhost:8000/login"
+                font-family="Noto Sans">
+                Términos y Condiciones
+            </mj-button>
+        </mj-column>
+        <mj-column width="50%">
+        <mj-button css-class="button"
+                align="left"
+                font-weight="500"
+                font-size="16px"
+                background-color="#1f1f1f"
+                color="#A8A8A8"
+                href="http://localhost:8000/login"
+                font-family="Noto Sans">
+                Política de Privacidad
+            </mj-button>
+        </mj-column>
+    </mj-section>
+
+    <mj-section background-color="#1f1f1f" padding="5px 0" border-radius="0px 0px 25px 25px">
+        <mj-column css-class="footer-text" width="600px">
+            <mj-text css-class="footer-text"
+                line-height="20px"
+                font-size="16px"
+                font-weight="500"
+                color="#A8A8A8"
+                align="center"
+                font-family="Noto Sans"
+                padding-bottom="30px"
+            >
+            <p>Desarrollado por Dilson Porras</p>
+            </mj-text>
+        </mj-column>
+    </mj-section>
+    <!-- Footer end. -->
+  </mj-body>
+</mjml>

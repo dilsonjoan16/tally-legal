@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Enums\RoleEnum;
 use App\Enums\StatusEnum;
-use App\Models\User;
+use App\Mail\WelcomeMail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class AuthController extends Controller
 {
@@ -65,6 +67,9 @@ class AuthController extends Controller
                 'role_id' => RoleEnum::USER->value,
                 'status' => StatusEnum::ACTIVE,
             ]);
+
+            // Send welcome email.
+            Mail::to($user->email)->queue(new WelcomeMail($user->username));
 
             return response()->json([
                 'message' => 'User registered',

@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Enums\RoleEnum;
 use App\Enums\StatusEnum;
+use App\Mail\WelcomeMail;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 
 class UserController extends Controller
 {
@@ -56,6 +58,9 @@ class UserController extends Controller
 
         try {
             $user = User::create($request->all());
+
+            // Send welcome email.
+            Mail::to($user->email)->queue(new WelcomeMail($user->username));
 
             return response()->json([
                 'message' => 'User created',
