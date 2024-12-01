@@ -92,6 +92,16 @@ Es un paquete para desarrollar emails de forma muy intuitiva, con su propia sint
 
 ---
 
+### Mails
+
+Para la ejecucion de Mails se manejo un sistema de colas para mantener performance de la app, buscando siempre las mejoras practicas.
+
+Para verificacion del mail generado se puede visitar la ruta correspondiente al MailHog:
+
+```bash
+localhost:8025
+```
+
 ## Authors
 
 - [@dilsonjoan16](https://www.github.com/dilsonjoan16)
