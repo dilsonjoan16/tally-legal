@@ -82,6 +82,16 @@ Con esta documentacion se pueden hacer todas las pruebas API respectivas.
 
 ---
 
+### MJML
+
+Es un paquete para desarrollar emails de forma muy intuitiva, con su propia sintaxis y totalmente responsives, este paquete responde casi a un microFramework.
+
+- [documentacion](https://github.com/innocenzi/vite-plugin-mjml)
+
+- [documentacion-mjml](https://documentation.mjml.io/)
+
+---
+
 ## Authors
 
 - [@dilsonjoan16](https://www.github.com/dilsonjoan16)
