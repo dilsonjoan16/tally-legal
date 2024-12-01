@@ -34,7 +34,7 @@ class UserFactory extends Factory
         return [
             'username' => $this->faker->userName(),
             'email' => $this->faker->unique()->safeEmail(),
-            'password' => $this->faker->password(8, 12),
+            'password' => 'Usuar10#', // Common password for testing.
             'role_id' => $this->faker->randomElement([RoleEnum::USER->value, RoleEnum::ADMIN->value]),
             'status' => $this->faker->randomElement([StatusEnum::ACTIVE->value, StatusEnum::INACTIVE->value]),
             'deleted_at' => $this->faker->boolean() ? now() : null,
