@@ -6,8 +6,9 @@ use App\Models\Post;
 use App\Models\User;
 use App\Enums\StatusEnum;
 use App\Models\PostCategory;
-use Illuminate\Http\JsonResponse;
+use App\Services\SaveRemoteAssets;
 use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Log;
 
 class PostController extends Controller
@@ -16,10 +17,14 @@ class PostController extends Controller
      * Constructor for the PostController class.
      *
      * @param \App\Models\Post $model The Eloquent model instance to use.
+     * @param \App\Services\SaveRemoteAssets $saveRemoteAssets The service for saving remote assets.
      */
-    public function __construct(public Post $model)
+    public function __construct(
+        public Post $model,
+        public SaveRemoteAssets $saveRemoteAssets
+    )
     {
-        parent::__construct();
+        parent::__construct($saveRemoteAssets);
         $this->model = new Post();
     }
 

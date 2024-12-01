@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Profile;
+use App\Services\SaveRemoteAssets;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Log;
@@ -13,10 +14,14 @@ class ProfileController extends Controller
      * Constructor for the ProfileController class.
      *
      * @param \App\Models\Profile $model The Eloquent model instance to use.
+     * @param \App\Services\SaveRemoteAssets $saveRemoteAssets The service for saving remote assets.
      */
-    public function __construct(public Profile $model)
+    public function __construct(
+        public Profile $model,
+        public SaveRemoteAssets $saveRemoteAssets
+    )
     {
-        parent::__construct();
+        parent::__construct($saveRemoteAssets);
         $this->model = new Profile;
     }
 

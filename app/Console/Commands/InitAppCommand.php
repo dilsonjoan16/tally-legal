@@ -54,13 +54,13 @@ class InitAppCommand extends Command
 
             $this->newLine();
 
-            // Execute tails processes.
-            $this->simulateStep('Corriendo procesos en cola', function () {
-                Artisan::call('queue:work', ['--tries=3' => true]);
-            }, 'Cola de procesos corriendo con éxito.');
+            $this->info('La aplicación ha sido configurada correctamente.');
 
             $this->newLine();
-            $this->info('La aplicación ha sido configurada correctamente.');
+
+            // Execute tails processes.
+            $this->warn('Corriendo procesos en cola... Puede utilizar la aplicacion sin problema alguno, no se recomienda cerrar la terminal.');
+            Artisan::call('queue:work');
         } catch (\Throwable $th) {
             $this->error($th->getMessage());
 

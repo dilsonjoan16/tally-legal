@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Enums\StatusEnum;
 use App\Models\PostCategory;
-use Illuminate\Http\JsonResponse;
+use App\Services\SaveRemoteAssets;
 use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Log;
 
 class PostCategoryController extends Controller
@@ -14,10 +15,14 @@ class PostCategoryController extends Controller
      * Constructor for the PostCategoryController class.
      *
      * @param \App\Models\PostCategory $model The Eloquent model instance to use.
+     * @param \App\Services\SaveRemoteAssets $saveRemoteAssets The service for saving remote assets.
      */
-    public function __construct(public PostCategory $model)
+    public function __construct(
+        public PostCategory $model,
+        public SaveRemoteAssets $saveRemoteAssets
+    )
     {
-        parent::__construct();
+        parent::__construct($saveRemoteAssets);
         $this->model = new PostCategory;
     }
 

@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Enums\RoleEnum;
 use App\Enums\StatusEnum;
 use App\Mail\WelcomeMail;
+use App\Services\SaveRemoteAssets;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Log;
@@ -17,10 +18,14 @@ class UserController extends Controller
      * Constructor for the UserController class.
      *
      * @param \App\Models\User $model The Eloquent model instance to use.
+     * @param \App\Services\SaveRemoteAssets $saveRemoteAssets The service for saving remote assets.
      */
-    public function __construct(public User $model)
+    public function __construct(
+        public User $model,
+        public SaveRemoteAssets $saveRemoteAssets
+    )
     {
-        parent::__construct();
+        parent::__construct($saveRemoteAssets);
         $this->model = new User;
     }
 

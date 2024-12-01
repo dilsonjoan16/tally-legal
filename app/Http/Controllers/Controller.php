@@ -14,7 +14,7 @@ abstract class Controller
      *
      * @param \App\Services\SaveRemoteAssets $saveRemoteAssets An instance of the SaveRemoteAssets service.
      */
-    public function __construct(readonly public SaveRemoteAssets $saveRemoteAssets)
+    public function __construct(public SaveRemoteAssets $saveRemoteAssets)
     {
     }
 
