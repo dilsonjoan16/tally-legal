@@ -10,6 +10,13 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 
+/**
+ * Controller for user authentication and management.
+ *
+ * @see https://codersfree.com/posts/guia-paso-a-paso-implementacion-de-autenticacion-jwt-en-laravel-y-lumen
+ * @see https://www.codalas.com/es/1905/using-json-web-tokens-with-laravel-to-create-apis
+ * @see https://www.nigmacode.com/laravel/jwt-en-laravel
+ */
 class AuthController extends Controller
 {
     /**
