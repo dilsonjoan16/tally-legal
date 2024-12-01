@@ -16,6 +16,6 @@ enum RoleEnum: int
      */
     public static function isAdmin(RoleEnum $role): bool
     {
-        return $role === self::ADMIN->value;
+        return $role === self::ADMIN;
     }
 }

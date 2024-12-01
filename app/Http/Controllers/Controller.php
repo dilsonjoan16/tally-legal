@@ -39,7 +39,7 @@ abstract class Controller
      */
     protected function abstractShow(Model $model): JsonResponse
     {
-        $relations = $model->getRelationshipsFromModel();
+        $relations = $model->getRelations();
 
         return response()->json([
             $model->getTable() => $model->loadMissing($relations)
@@ -81,7 +81,7 @@ abstract class Controller
      */
     protected function abstractGetAllRegistersWithDetails(Model $model): JsonResponse
     {
-        $relations = $model->getRelationshipsFromModel();
+        $relations = $model->getRelations();
 
         return response()->json([
             $model->getTable() => $model::withTrashed()->with($relations)->get()
