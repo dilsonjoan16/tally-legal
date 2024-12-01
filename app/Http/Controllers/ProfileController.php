@@ -4,24 +4,41 @@ namespace App\Http\Controllers;
 
 use App\Models\Profile;
 use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Log;
 
 class ProfileController extends Controller
 {
+    /**
+     * Constructor for the ProfileController class.
+     *
+     * @param \App\Models\Profile $model The Eloquent model instance to use.
+     */
     public function __construct(public Profile $model)
     {
         parent::__construct();
         $this->model = new Profile;
     }
 
-    public function showProfile()
+    /**
+     * Retrieve the authenticated user's profile.
+     *
+     * @return \Illuminate\Http\JsonResponse A JSON response containing the authenticated user's profile.
+     */
+    public function showProfile(): JsonResponse
     {
         return response()->json([
             'profile' => auth()->user()->profile
         ]);
     }
 
-    public function storeProfile(Request $request)
+    /**
+     * Create a new profile in the database.
+     *
+     * @param \Illuminate\Http\Request $request The HTTP request containing the profile data.
+     * @return \Illuminate\Http\JsonResponse A JSON response indicating success or failure of the operation.
+     */
+    public function storeProfile(Request $request): JsonResponse
     {
         $request->validate([
             'first_name' => 'required|string',
@@ -58,7 +75,13 @@ class ProfileController extends Controller
         }
     }
 
-    public function updateProfile(Request $request)
+    /**
+     * Updates an existing profile in the database.
+     *
+     * @param \Illuminate\Http\Request $request The HTTP request containing the profile data.
+     * @return \Illuminate\Http\JsonResponse A JSON response indicating success or failure of the operation.
+     */
+    public function updateProfile(Request $request): JsonResponse
     {
         $user = auth()->user();
         if (!$user) {
@@ -102,7 +125,13 @@ class ProfileController extends Controller
         }
     }
 
-    public function manageAvatar(Request $request)
+    /**
+     * Update the avatar of the user.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function manageAvatar(Request $request): JsonResponse
     {
         $request->validate([
             'avatar' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',

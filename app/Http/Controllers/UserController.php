@@ -2,48 +2,87 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Enums\RoleEnum;
 use App\Enums\StatusEnum;
 use App\Mail\WelcomeMail;
-use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 
 class UserController extends Controller
 {
+    /**
+     * Constructor for the UserController class.
+     *
+     * @param \App\Models\User $model The Eloquent model instance to use.
+     */
     public function __construct(public User $model)
     {
         parent::__construct();
         $this->model = new User;
     }
 
-    public function index()
+/**
+ * Retrieves a JSON response of all non-trashed users.
+ *
+ * @return \Illuminate\Http\JsonResponse A JSON response containing the collection of users.
+ */
+    public function index(): JsonResponse
     {
         return $this->abstractIndex($this->model);
     }
 
-    public function show(User $user)
+    /**
+     * Retrieves a JSON response of the given user and its relationships.
+     *
+     * @param \App\Models\User $user The Eloquent model instance to retrieve.
+     * @return \Illuminate\Http\JsonResponse A JSON response containing the user and its relationships.
+     */
+    public function show(User $user): JsonResponse
     {
         return $this->abstractShow($user);
     }
 
-    public function getTrashedUsers()
+    /**
+     * Retrieves a JSON response of all trashed users.
+     *
+     * @return \Illuminate\Http\JsonResponse A JSON response containing the collection of trashed users.
+     */
+    public function getTrashedUsers(): JsonResponse
     {
         return $this->abstractGetTrashed($this->model);
     }
 
-    public function getAllUsers()
+    /**
+     * Retrieves a JSON response of all records, including trashed records, of the given model.
+     *
+     * @return \Illuminate\Http\JsonResponse A JSON response containing the collection of records.
+     */
+    public function getAllUsers(): JsonResponse
     {
         return $this->abstractGetAll($this->model);
     }
 
-    public function getAllUserDetails()
+    /**
+     * Retrieves a JSON response of all records, including trashed records, of the given model
+     * and its relationships.
+     *
+     * @return \Illuminate\Http\JsonResponse A JSON response containing the collection of records.
+     */
+    public function getAllUserDetails(): JsonResponse
     {
         return $this->abstractGetAllRegistersWithDetails($this->model);
     }
 
-    public function store(Request $request)
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function store(Request $request): JsonResponse
     {
         $request->validate([
             'username' => 'required|string',
@@ -74,7 +113,18 @@ class UserController extends Controller
         }
     }
 
-    public function update(User $user, Request $request)
+    /**
+     * Update the specified user in storage.
+     *
+     * Validates the input request for username, email, and optionally password.
+     * Updates the user's information in the database and returns a JSON response.
+     * Logs any errors encountered during the update process.
+     *
+     * @param \App\Models\User $user The user instance to update.
+     * @param \Illuminate\Http\Request $request The request instance containing updated user data.
+     * @return \Illuminate\Http\JsonResponse A JSON response containing the updated user or an error message.
+     */
+    public function update(User $user, Request $request): JsonResponse
     {
         $request->validate([
             'username' => 'required|string',
@@ -102,7 +152,17 @@ class UserController extends Controller
         }
     }
 
-    public function updateStatus(User $user, Request $request)
+    /**
+     * Update the status of the specified user in storage.
+     *
+     * Validates the input request for the status field, ensuring it matches the predefined active or inactive states.
+     * Updates the user's status in the database and returns a JSON response.
+     *
+     * @param \App\Models\User $user The user instance whose status is to be updated.
+     * @param \Illuminate\Http\Request $request The request instance containing the updated status.
+     * @return \Illuminate\Http\JsonResponse A JSON response containing the updated user status or an error message.
+     */
+    public function updateStatus(User $user, Request $request): JsonResponse
     {
         $request->validate([
             'status' => 'required|in:' . StatusEnum::ACTIVE->value . ',' . StatusEnum::INACTIVE->value,
@@ -122,7 +182,17 @@ class UserController extends Controller
         ]);
     }
 
-    public function updateRole(User $user, Request $request)
+    /**
+     * Update the role of the specified user in storage.
+     *
+     * Validates the input request for the role_id field, ensuring it matches the predefined user or admin roles.
+     * Updates the user's role in the database and returns a JSON response.
+     *
+     * @param \App\Models\User $user The user instance whose role is to be updated.
+     * @param \Illuminate\Http\Request $request The request instance containing the updated role.
+     * @return \Illuminate\Http\JsonResponse A JSON response containing the updated user role or an error message.
+     */
+    public function updateRole(User $user, Request $request): JsonResponse
     {
         $request->validate([
             'role_id' => 'required|in:' . RoleEnum::USER->value . ',' . RoleEnum::ADMIN->value,
@@ -142,21 +212,44 @@ class UserController extends Controller
         ]);
     }
 
-    public function delete(User $user)
+    /**
+     * Remove the specified user from storage.
+     *
+     * @param \App\Models\User $user The user instance to delete.
+     * @return \Illuminate\Http\JsonResponse A JSON response containing the success or error message.
+     */
+    public function delete(User $user): JsonResponse
     {
         return $this->abstractDelete($user);
     }
 
-    public function restoreUser(User $user)
+    /**
+     * Restore a user from the database.
+     *
+     * @param \App\Models\User $user The user instance to restore.
+     * @return \Illuminate\Http\JsonResponse A JSON response containing the success or error message.
+     */
+    public function restoreUser(User $user): JsonResponse
     {
         return $this->abstractRestore($user);
     }
 
-    public function restoreAllUsers()
+    /**
+     * Restores all trashed users from the database.
+     *
+     * @return \Illuminate\Http\JsonResponse A JSON response containing the success or error message.
+     */
+    public function restoreAllUsers(): JsonResponse
     {
         return $this->abstractRestoreAll($this->model);
     }
 
+    /**
+     * Permanently deletes a user from the database.
+     *
+     * @param \App\Models\User $user The user instance to permanently delete.
+     * @return \Illuminate\Http\JsonResponse A JSON response containing the success or error message.
+     */
     public function forceDelete(User $user)
     {
         return $this->abstractForceDelete($user);

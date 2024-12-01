@@ -6,12 +6,19 @@ use App\Models\User;
 use App\Enums\RoleEnum;
 use App\Enums\StatusEnum;
 use App\Mail\WelcomeMail;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 
 class AuthController extends Controller
 {
-    public function login(Request $request)
+    /**
+     * Handle a login request to the application.
+     *
+     * @param \Illuminate\Http\Request $request The request instance containing user credentials.
+     * @return \Illuminate\Http\JsonResponse A JSON response containing the authentication token or an error message.
+     */
+    public function login(Request $request): JsonResponse
     {
         $credentials = $request->only('email', 'password');
 
@@ -22,24 +29,45 @@ class AuthController extends Controller
         return $this->respondWithToken($token);
     }
 
-    public function me()
+    /**
+     * Retrieve the authenticated user's information.
+     *
+     * @return \Illuminate\Http\JsonResponse A JSON response containing the authenticated user's details.
+     */
+    public function me(): JsonResponse
     {
         return response()->json(auth()->user());
     }
 
-    public function logout()
+    /**
+     * Logout the authenticated user and revoke their access token.
+     *
+     * @return \Illuminate\Http\JsonResponse A JSON response containing a success message.
+     */
+    public function logout(): JsonResponse
     {
         auth()->logout();
 
         return response()->json(['mensaje' => 'Cierre de sesión exitoso']);
     }
 
-    public function refresh()
+    /**
+     * Refresh the authenticated user's access token.
+     *
+     * @return \Illuminate\Http\JsonResponse A JSON response containing the refreshed authentication token.
+     */
+    public function refresh(): JsonResponse
     {
         return $this->respondWithToken(auth()->refresh());
     }
 
-    protected function respondWithToken($token)
+    /**
+     * Respond with a JSON response containing the authentication token.
+     *
+     * @param string $token The authentication token.
+     * @return \Illuminate\Http\JsonResponse A JSON response containing the authentication token.
+     */
+    protected function respondWithToken($token): JsonResponse
     {
         return response()->json([
             'access_token' => $token,
@@ -48,7 +76,13 @@ class AuthController extends Controller
         ]);
     }
 
-    public function register(Request $request)
+    /**
+     * Handle a registration request to the application.
+     *
+     * @param \Illuminate\Http\Request $request The request instance containing user data.
+     * @return \Illuminate\Http\JsonResponse A JSON response containing the registered user or an error message.
+     */
+    public function register(Request $request): JsonResponse
     {
         $request->validate([
             'username' => 'required|string',

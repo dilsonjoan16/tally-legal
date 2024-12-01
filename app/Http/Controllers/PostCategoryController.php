@@ -4,33 +4,72 @@ namespace App\Http\Controllers;
 
 use App\Enums\StatusEnum;
 use App\Models\PostCategory;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
 class PostCategoryController extends Controller
 {
-    public function __construct(public PostCategory $model) {
+    /**
+     * Constructor for the PostCategoryController class.
+     *
+     * @param \App\Models\PostCategory $model The Eloquent model instance to use.
+     */
+    public function __construct(public PostCategory $model)
+    {
         parent::__construct();
         $this->model = new PostCategory;
     }
 
-    public function index() {
+    /**
+     * Retrieves a JSON response of all non-trashed post categories.
+     *
+     * @return \Illuminate\Http\JsonResponse A JSON response containing the collection of post categories.
+     */
+    public function index(): JsonResponse
+    {
         return $this->abstractIndex($this->model);
     }
 
-    public function getTrashedCategories() {
+    /**
+     * Retrieves a JSON response of all trashed post categories.
+     *
+     * @return \Illuminate\Http\JsonResponse A JSON response containing the collection of trashed post categories.
+     */
+    public function getTrashedCategories(): JsonResponse
+    {
         return $this->abstractGetTrashed($this->model);
     }
 
-    public function getAllCategories() {
+    /**
+     * Retrieves a JSON response of all post categories, including trashed ones.
+     *
+     * @return \Illuminate\Http\JsonResponse A JSON response containing the collection of all post categories.
+     */
+    public function getAllCategories(): JsonResponse
+    {
         return $this->abstractGetAll($this->model);
     }
 
-    public function getCategoryDetails(PostCategory $category) {
+    /**
+     * Retrieves a JSON response of the given post category and its relationships.
+     *
+     * @param \App\Models\PostCategory $category The Eloquent model instance to retrieve.
+     * @return \Illuminate\Http\JsonResponse A JSON response containing the post category and its relationships.
+     */
+    public function getCategoryDetails(PostCategory $category): JsonResponse
+    {
         return $this->abstractShow($category);
     }
 
-    public function storeCategory(Request $request) {
+    /**
+     * Stores a new post category in the database.
+     *
+     * @param \Illuminate\Http\Request $request The HTTP request containing the category data.
+     * @return \Illuminate\Http\JsonResponse A JSON response indicating success or failure of the operation.
+     */
+    public function storeCategory(Request $request): JsonResponse
+    {
         $request->validate([
             'name' => 'required|string',
         ]);
@@ -49,7 +88,15 @@ class PostCategoryController extends Controller
         ], 200);
     }
 
-    public function updateCategory(PostCategory $category, Request $request) {
+    /**
+     * Updates an existing post category in the database.
+     *
+     * @param \App\Models\PostCategory $category The Eloquent model instance to update.
+     * @param \Illuminate\Http\Request $request The HTTP request containing the category data.
+     * @return \Illuminate\Http\JsonResponse A JSON response indicating success or failure of the operation.
+     */
+    public function updateCategory(PostCategory $category, Request $request): JsonResponse
+    {
         $request->validate([
             'name' => 'nullable|string',
             'status' => 'nullable|in:'. StatusEnum::ACTIVE->value . ',' . StatusEnum::INACTIVE->value
@@ -69,19 +116,46 @@ class PostCategoryController extends Controller
         ], 200);
     }
 
-    public function deleteCategory(PostCategory $category) {
+    /**
+     * Deletes a post category from the database.
+     *
+     * @param \App\Models\PostCategory $category The Eloquent model instance to delete.
+     * @return \Illuminate\Http\JsonResponse A JSON response indicating success or failure of the operation.
+     */
+    public function deleteCategory(PostCategory $category): JsonResponse
+    {
         return $this->abstractDelete($category);
     }
 
-    public function restoreCategory(PostCategory $category) {
+    /**
+     * Restores a post category from the database.
+     *
+     * @param \App\Models\PostCategory $category The Eloquent model instance to restore.
+     * @return \Illuminate\Http\JsonResponse A JSON response indicating success or failure of the operation.
+     */
+    public function restoreCategory(PostCategory $category): JsonResponse
+    {
         return $this->abstractRestore($category);
     }
 
-    public function forceDeleteCategory(PostCategory $category) {
+    /**
+     * Permanently deletes a post category from the database.
+     *
+     * @param \App\Models\PostCategory $category The Eloquent model instance to permanently delete.
+     * @return \Illuminate\Http\JsonResponse A JSON response indicating success or failure of the operation.
+     */
+    public function forceDeleteCategory(PostCategory $category): JsonResponse
+    {
         return $this->abstractForceDelete($category);
     }
 
-    public function restoreAllCategories() {
+    /**
+     * Restores all trashed post categories from the database.
+     *
+     * @return \Illuminate\Http\JsonResponse A JSON response indicating success or failure of the operation.
+     */
+    public function restoreAllCategories(): JsonResponse
+    {
         return $this->abstractRestoreAll($this->model);
     }
 }

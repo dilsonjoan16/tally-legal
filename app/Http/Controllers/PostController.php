@@ -6,50 +6,108 @@ use App\Models\Post;
 use App\Models\User;
 use App\Enums\StatusEnum;
 use App\Models\PostCategory;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
 class PostController extends Controller
 {
+    /**
+     * Constructor for the PostController class.
+     *
+     * @param \App\Models\Post $model The Eloquent model instance to use.
+     */
     public function __construct(public Post $model)
     {
         parent::__construct();
         $this->model = new Post();
     }
 
-    public function index() {
+    /**
+     * Retrieves a JSON response of all non-trashed posts.
+     *
+     * @return \Illuminate\Http\JsonResponse A JSON response containing the collection of posts.
+     */
+    public function index(): JsonResponse
+    {
         return $this->abstractIndex($this->model);
     }
 
-    public function getAllPosts() {
+    /**
+     * Retrieves a JSON response of all posts, including trashed ones.
+     *
+     * @return \Illuminate\Http\JsonResponse A JSON response containing the collection of all posts.
+     */
+    public function getAllPosts(): JsonResponse
+    {
         return $this->abstractGetAll($this->model);
     }
 
-    public function getTrashedPosts() {
+    /**
+     * Retrieves a JSON response of all trashed posts.
+     *
+     * @return \Illuminate\Http\JsonResponse A JSON response containing the collection of trashed posts.
+     */
+    public function getTrashedPosts(): JsonResponse
+    {
         return $this->abstractGetTrashed($this->model);
     }
 
-    public function getAllPostsWithDetails() {
+    /**
+     * Retrieves a JSON response of all posts, including trashed ones, and their relationships.
+     *
+     * @return \Illuminate\Http\JsonResponse A JSON response containing the collection of all posts.
+     */
+    public function getAllPostsWithDetails(): JsonResponse
+    {
         return $this->abstractGetAllRegistersWithDetails($this->model);
     }
 
-    public function getPostsByUser(User $user) {
+    /**
+     * Retrieves a JSON response of all posts belonging to the given user.
+     *
+     * @param \App\Models\User $user The user instance to retrieve posts for.
+     * @return \Illuminate\Http\JsonResponse A JSON response containing the collection of posts.
+     */
+    public function getPostsByUser(User $user): JsonResponse
+    {
         return response()->json([
             'posts' => Post::withoutTrashed()->where('user_id', $user->id)->with(['category', 'user'])->get()
         ]);
     }
 
-    public function getPostsByCategory(PostCategory $category) {
+    /**
+     * Retrieves a JSON response of all posts belonging to the given post category.
+     *
+     * @param \App\Models\PostCategory $category The post category instance to retrieve posts for.
+     * @return \Illuminate\Http\JsonResponse A JSON response containing the collection of posts.
+     */
+    public function getPostsByCategory(PostCategory $category): JsonResponse
+    {
         return response()->json([
             'posts' => Post::withoutTrashed()->where('category_id', $category->id)->with(['category', 'user'])->get()
         ]);
     }
 
-    public function getPostDetails(Post $post) {
+    /**
+     * Retrieves a JSON response of the given post and its relationships.
+     *
+     * @param \App\Models\Post $post The post instance to retrieve.
+     * @return \Illuminate\Http\JsonResponse A JSON response containing the post and its relationships.
+     */
+    public function getPostDetails(Post $post): JsonResponse
+    {
         return $this->abstractShow($post);
     }
 
-    public function storePost(Request $request) {
+    /**
+     * Stores a new post in the database.
+     *
+     * @param \Illuminate\Http\Request $request The HTTP request containing the post data.
+     * @return \Illuminate\Http\JsonResponse A JSON response indicating success or failure of the operation.
+     */
+    public function storePost(Request $request): JsonResponse
+    {
         $request->validate([
             'title' => 'required|string',
             'content' => 'required|string',
@@ -74,7 +132,15 @@ class PostController extends Controller
         ], 201);
     }
 
-    public function updatePost(Post $post, Request $request) {
+    /**
+     * Updates an existing post in the database.
+     *
+     * @param \App\Models\Post $post The Eloquent model instance to update.
+     * @param \Illuminate\Http\Request $request The HTTP request containing the post data.
+     * @return \Illuminate\Http\JsonResponse A JSON response indicating success or failure of the operation.
+     */
+    public function updatePost(Post $post, Request $request): JsonResponse
+    {
         $request->validate([
             'name' => 'nullable|string',
             'description' => 'nullable|string',
@@ -96,23 +162,58 @@ class PostController extends Controller
         ], 200);
     }
 
-    public function deletePost(Post $post) {
+    /**
+     * Deletes a post from the database.
+     *
+     * @param \App\Models\Post $post The Eloquent model instance to delete.
+     * @return \Illuminate\Http\JsonResponse A JSON response containing the success or error message.
+     */
+    public function deletePost(Post $post): JsonResponse
+    {
         return $this->abstractDelete($post);
     }
 
-    public function restorePost(Post $post) {
+    /**
+     * Restores a post from the database.
+     *
+     * @param \App\Models\Post $post The Eloquent model instance to restore.
+     * @return \Illuminate\Http\JsonResponse A JSON response indicating success or failure of the operation.
+     */
+    public function restorePost(Post $post): JsonResponse
+    {
         return $this->abstractRestore($post);
     }
 
-    public function forceDeletePost(Post $post) {
+    /**
+     * Permanently deletes a post from the database.
+     *
+     * @param \App\Models\Post $post The Eloquent model instance to permanently delete.
+     * @return \Illuminate\Http\JsonResponse A JSON response containing the success or error message.
+     */
+    public function forceDeletePost(Post $post): JsonResponse
+    {
         return $this->abstractForceDelete($post);
     }
 
-    public function restoreAllPosts() {
+    /**
+     * Restores all trashed posts from the database.
+     *
+     * @return \Illuminate\Http\JsonResponse A JSON response containing the success or error message.
+     */
+    public function restoreAllPosts(): JsonResponse
+    {
         return $this->abstractRestoreAll($this->model);
     }
 
-    public function manageImage(Post $post, Request $request) {
+    /**
+     * Updates the image of a post.
+     *
+     * @param \App\Models\Post $post The Eloquent model instance to update.
+     * @param \Illuminate\Http\Request $request The HTTP request containing the image.
+     * @return \Illuminate\Http\JsonResponse A JSON response containing the success or error message.
+     */
+    public function manageImage(Post $post, Request $request): JsonResponse
+    {
         $request->validate([
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
