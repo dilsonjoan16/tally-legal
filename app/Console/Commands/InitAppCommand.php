@@ -84,8 +84,12 @@ class InitAppCommand extends Command
         $this->newLine();
     }
 
+
     /**
-     * The administrator user creates.
+     * Create an administrator user.
+     *
+     * This method asks the user to input the administrator's username, email and password.
+     * Then, it creates a new administrator user.
      */
     private function createAdminUser(): void
     {
@@ -106,8 +110,11 @@ class InitAppCommand extends Command
         ]);
     }
 
+
     /**
-     * Request a valid email.
+     * Prompts the user to input a valid email address, validating the input.
+     *
+     * @return string The validated email address provided by the user.
      */
     private function askValidEmail(): string
     {
@@ -118,8 +125,15 @@ class InitAppCommand extends Command
         );
     }
 
+
     /**
-     * Request a valid password with regx.
+     * Ask for a valid password to the user.The password must meet the following requirements:
+     * - It must contain between 8 and 12 characters.
+     * - It must contain at least one uppercase and a tiny.
+     * - It must contain at least one number.
+     * - It must contain at least a special character (@, $,!, #, %, *,?, &).
+     *
+     * @return string The password entered by the user.
      */
     private function askValidPassword(): string
     {
@@ -131,7 +145,12 @@ class InitAppCommand extends Command
     }
 
     /**
-     * Request entry with validation.
+     * Prompt the user with a question and validates the input.
+     *
+     * @param string $question The question to ask the user.
+     * @param callable $validation A callable that validates the user's input.
+     * @param string $errorMessage The error message to display if validation fails.
+     * @return string The validated user input.
      */
     private function askWithValidation(string $question, callable $validation, string $errorMessage): string
     {

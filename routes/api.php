@@ -40,7 +40,7 @@ Route::group(['middleware' => 'api'], function () {
                 Route::delete('delete/{user}', [UserController::class, 'delete'])->name('users.delete');
             });
 
-            // User routes.
+            // Common routes.
             Route::get('index', [UserController::class, 'index'])->name('users.index');
             Route::put('update/{user}', [UserController::class, 'update'])->name('users.update');
         });
@@ -59,6 +59,7 @@ Route::group(['middleware' => 'api'], function () {
             Route::group(['middleware' => 'auth.admin'], function () {
                 Route::get('all', [PostController::class, 'getAllPosts'])->name('posts.all');
                 Route::get('trashed', [PostController::class, 'getTrashedPosts'])->name('posts.trashed');
+                Route::get('all-with-details', [PostController::class, 'getAllPostsWithDetails'])->name('posts.all-with-details');
                 Route::get('by-user/{user}', [PostController::class, 'getPostsByUser'])->name('posts.by-user');
                 Route::get('by-category/{category}', [PostController::class, 'getPostsByCategory'])->name('posts.by-category');
                 Route::delete('restore/{post}', [PostController::class, 'restorePost'])->name('posts.restore');
@@ -66,11 +67,11 @@ Route::group(['middleware' => 'api'], function () {
                 Route::delete('force-delete/{post}', [PostController::class, 'forceDeletePost'])->name('posts.force-delete');
             });
 
-            // User routes.
+            // Common routes.
             Route::get('index', [PostController::class, 'index'])->name('posts.index');
             Route::get('details/{post}', [PostController::class, 'getPostDetails'])->name('posts.details');
             Route::post('store', [PostController::class, 'storePost'])->name('posts.store');
-            Route::post('upload-image/{post}', [PostController::class, 'manageImage'])->name('posts.image');
+            Route::put('upload-image/{post}', [PostController::class, 'manageImage'])->name('posts.image');
             Route::put('update/{post}', [PostController::class, 'updatePost'])->name('posts.update');
             Route::delete('delete/{post}', [PostController::class, 'deletePost'])->name('posts.delete');
         });
@@ -89,7 +90,7 @@ Route::group(['middleware' => 'api'], function () {
                 Route::delete('force-delete/{category}', [PostCategoryController::class, 'forceDeleteCategory'])->name('categories.force-delete');
             });
 
-            // User routes.
+            // Common routes.
             Route::get('index', [PostCategoryController::class, 'index'])->name('categories.index');
             Route::get('details/{category}', [PostCategoryController::class, 'getCategoryDetails'])->name('categories.details');
         });

@@ -85,7 +85,9 @@ class UserController extends Controller
         ]);
 
         try {
-            $user->update($request->all());
+            $hasPassword = $request->has('password') && $request->input('password') !== null && $request->input('password') !== '';
+
+            $user->update($hasPassword ? $request->only('username', 'email', 'password') : $request->only('username', 'email'));
 
             return response()->json([
                 'message' => 'User updated',
@@ -123,7 +125,7 @@ class UserController extends Controller
     public function updateRole(User $user, Request $request)
     {
         $request->validate([
-            'role' => 'required|in:' . RoleEnum::USER->value . ',' . RoleEnum::ADMIN->value,
+            'role_id' => 'required|in:' . RoleEnum::USER->value . ',' . RoleEnum::ADMIN->value,
         ]);
 
         $user->update($request->all());

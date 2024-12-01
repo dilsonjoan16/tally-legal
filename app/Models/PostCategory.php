@@ -18,6 +18,8 @@ class PostCategory extends Model
         'status',
     ];
 
+    protected $dates = ['deleted_at'];
+
     protected $casts = [
         'status' => StatusEnum::class,
     ];

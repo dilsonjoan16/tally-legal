@@ -41,6 +41,8 @@ class ProfileController extends Controller
                 'user_id' => $user->id
             ]);
 
+            $request->except(['avatar']);
+
             // Handle transaction.
             $user->profile()->create($request->all());
 
@@ -81,6 +83,8 @@ class ProfileController extends Controller
             'country' => 'nullable|string',
             'zip' => 'nullable|string',
         ]);
+
+        $request->except(['avatar']);
 
         try {
             // Handle transaction.

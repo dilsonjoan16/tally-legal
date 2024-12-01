@@ -64,7 +64,7 @@ npm install
 ```
 
 ---
-## Ejecutar comando para inicializar app
+## Ejecutar comando para configurar la app
 
 Se desarrollo un comando para generar migraciones, correr seeders y crear el usuario maestro con el cual se pueden consultar todos los endpoints sin restriccion alguna.
 
@@ -73,6 +73,13 @@ Se desarrollo un comando para generar migraciones, correr seeders y crear el usu
 ```
 
 ---
+
+### Coleccion de POSTMAN
+
+- [documentacion-postman](https://app.getpostman.com/join-team?invite_code=dfa97561f745e3818a94a2b25ac1d4e8&target_code=3a01fc378be52a8273c25533ac565b43)
+
+---
+
 ## Authors
 
 - [@dilsonjoan16](https://www.github.com/dilsonjoan16)

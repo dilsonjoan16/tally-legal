@@ -27,11 +27,13 @@ class Post extends Model
         'status' => StatusEnum::class,
     ];
 
+    protected $dates = ['deleted_at'];
+
     protected static function booted()
     {
-        static::creating(function (PostCategory $category) {
-            $category->status = StatusEnum::ACTIVE->value;
-            $category->slug = Str::slug($category->name);
+        static::creating(function (Post $post) {
+            $post->slug = Str::slug($post->title);
+            $post->status = StatusEnum::ACTIVE->value;
         });
     }
 
