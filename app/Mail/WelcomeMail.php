@@ -12,7 +12,7 @@ use Illuminate\Queue\SerializesModels;
 /**
  * @see https://github.com/innocenzi/vite-plugin-mjml
  */
-class WelcomeMail extends Mailable
+class WelcomeMail extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
 

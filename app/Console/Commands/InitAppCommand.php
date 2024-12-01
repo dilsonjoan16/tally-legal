@@ -2,10 +2,12 @@
 
 namespace App\Console\Commands;
 
+use App\Models\User;
 use App\Enums\RoleEnum;
 use App\Enums\StatusEnum;
-use App\Models\User;
+use App\Mail\WelcomeMail;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Artisan;
 
 class InitAppCommand extends Command
@@ -101,13 +103,15 @@ class InitAppCommand extends Command
 
         $password = $this->askValidPassword();
 
-        User::create([
+        $user = User::create([
             'username' => $username,
             'email' => $email,
             'password' => $password,
             'role_id' => RoleEnum::ADMIN->value,
             'status' => StatusEnum::ACTIVE->value,
         ]);
+
+        Mail::to($user->email)->queue(new WelcomeMail($user->username));
     }
 
 
