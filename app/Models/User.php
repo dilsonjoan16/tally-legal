@@ -38,6 +38,29 @@ class User extends Authenticatable implements JWTSubject
     }
 
     /**
+     * Bootstrap the model.
+     *
+     * When the model is being deleted, set its status to 'inactive'.
+     * When the model is being restored, set its status to 'active'.
+     *
+     * @return void
+     */
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function (User $user) {
+            $user->status = StatusEnum::INACTIVE->value;
+            $user->save();
+        });
+
+        static::restoring(function (User $user) {
+            $user->status = StatusEnum::ACTIVE->value;
+            $user->save();
+        });
+    }
+
+    /**
      * The attributes that should be mutated to dates.
      *
      * @var array
@@ -82,21 +105,31 @@ class User extends Authenticatable implements JWTSubject
         ];
     }
 
-    public function isAdmin(): bool
-    {
-        return $this->role_id === RoleEnum::ADMIN->value;
-    }
-
+    /**
+     * Get the user's associated profile.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne<\App\Models\Profile>
+     */
     public function profile(): HasOne
     {
         return $this->hasOne(Profile::class);
     }
 
+    /**
+     * Get the posts written by the user.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\Post>
+     */
     public function posts(): HasMany
     {
         return $this->hasMany(Post::class);
     }
 
+    /**
+     * Get the role associated with the user.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Role>
+     */
     public function role(): BelongsTo
     {
         return $this->belongsTo(Role::class);
