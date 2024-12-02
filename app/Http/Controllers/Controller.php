@@ -99,11 +99,11 @@ abstract class Controller
         try {
             $model->delete();
             return response()->json([
-                'message' => $model::class . 'Deleted'
+                'message' => class_basename($model::class) . ' Deleted'
             ], 200);
 
         } catch (\Throwable $th) {
-            Log::error('Error deleting ' . $model::class, ['error' => $th]);
+            Log::error('Error deleting ' . class_basename($model::class), ['error' => $th]);
             return response()->json([
                 'message' => $th->getMessage()
             ], 500);
@@ -121,11 +121,11 @@ abstract class Controller
         try {
             $model->forceDelete();
             return response()->json([
-                'message' => $model::class . 'Force Deleted'
+                'message' => class_basename($model::class) . ' Force Deleted'
             ], 200);
 
         } catch (\Throwable $th) {
-            Log::error('Error force deleting ' . $model::class, ['error' => $th]);
+            Log::error('Error force deleting ' . class_basename($model::class), ['error' => $th]);
             return response()->json([
                 'message' => $th->getMessage()
             ], 500);
@@ -143,11 +143,11 @@ abstract class Controller
         try {
             $model->restore();
             return response()->json([
-                'message' => $model::class . 'Restored'
+                'message' => class_basename($model::class) . ' Restored'
             ], 200);
 
         } catch (\Throwable $th) {
-            Log::error('Error restoring ' . $model::class, ['error' => $th]);
+            Log::error('Error restoring ' . class_basename($model::class), ['error' => $th]);
             return response()->json([
                 'message' => $th->getMessage()
             ], 500);
@@ -165,11 +165,11 @@ abstract class Controller
         try {
             $model::onlyTrashed()->restore();
             return response()->json([
-                'message' => $model::class . 'Restored'
+                'message' => class_basename($model::class) . ' Restored'
             ], 200);
 
         } catch (\Throwable $th) {
-            Log::error('Error restoring ' . $model::class, ['error' => $th]);
+            Log::error('Error restoring ' . class_basename($model::class), ['error' => $th]);
             return response()->json([
                 'message' => $th->getMessage()
             ], 500);
