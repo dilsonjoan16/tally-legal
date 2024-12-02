@@ -101,7 +101,21 @@ Para verificacion del mail generado se puede visitar la ruta correspondiente al 
 ```bash
 localhost:8025
 ```
+---
 
+### Adminer
+
+Para facilitar el trabajo y revision de base de datos, localmente se dejo un gestor de base de datos muy popular (Adminer).
+
+Se gestiona mediante docker-compose como un servicio mas, para acceder a el debe ingresar la siguiente ruta:
+
+```bash
+localhost:7777
+```
+
+Las credenciales las podra encontrar en el .env.example.
+
+---
 ## Authors
 
 - [@dilsonjoan16](https://www.github.com/dilsonjoan16)
