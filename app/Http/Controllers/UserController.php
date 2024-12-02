@@ -132,8 +132,8 @@ class UserController extends Controller
     public function update(User $user, Request $request): JsonResponse
     {
         $request->validate([
-            'username' => 'required|string',
-            'email' => 'required|email|unique:users,email,except,' . $user->id,
+            'username' => 'nullable|string',
+            'email' => 'nullable|email|unique:users,email,' . $user->getKey(),
             'password' => 'nullable|string|min:8|max:12|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,12}$/',
         ], [
             'password.regex' => 'Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character',
